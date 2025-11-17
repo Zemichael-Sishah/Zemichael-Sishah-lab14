@@ -13,7 +13,7 @@ public class Server {
     private ServerSocket serverSocket;
     private ArrayList<LocalDateTime> connectedTimes;
 
-    
+
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         connectedTimes = new ArrayList<>();
@@ -75,6 +75,7 @@ public class Server {
             this.socket = socket;
         }
 
+        
         @Override
         public void run() {
             BufferedReader in = null;
