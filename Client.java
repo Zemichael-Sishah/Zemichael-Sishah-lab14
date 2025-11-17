@@ -4,69 +4,52 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- * Client for Lab 14 – connects to a server, performs a handshake,
- * and sends integer factorization requests.
- */
 public class Client {
-
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
 
-    /**
-     * Constructs a client and connects to the given host/port.
-     */
+    //Constructs a client and connects to the given host / port.
     public Client(String host, int port) throws IOException {
         socket = new Socket(host, port);
-        out = new PrintWriter(socket.getOutputStream(), true); // auto-flush
+        out = new PrintWriter(socket.getOutputStream(), true); 
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-    /**
-     * Used by the tester to check the underlying socket.
-     */
+    // underlying socket checker     
     public Socket getSocket() {
         return socket;
     }
 
-    /**
-     * Sends the handshake key "12345" to the server.
-     */
+    // sends the handshake key "12345" to the server.
     public void handshake() {
         out.println("12345");
         out.flush();
     }
 
-    /**
-     * Sends a number as a request to the server and returns the response line.
-     */
+    // sends number as a request to the server 
+    //returns response line.
     public String request(String message) throws IOException {
         out.println(message);
         out.flush();
         return in.readLine();
     }
 
-    /**
-     * Disconnects the client cleanly.
-     */
+    // disconnects client 
     public void disconnect() {
         try {
             if (in != null) {
                 in.close();
             }
-        } catch (IOException e) {
-            // ignore
-        }
+        } catch (IOException e) {}
         if (out != null) {
             out.close();
         }
+        
         try {
             if (socket != null && !socket.isClosed()) {
                 socket.close();
             }
-        } catch (IOException e) {
-            // ignore
-        }
+        } catch (IOException e) {}
     }
 }
